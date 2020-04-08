@@ -2,12 +2,14 @@ package com.example.demo;
 
 import com.example.demo.springdata.pojo.Comment;
 import com.example.demo.springdata.service.CommentService;
+import com.example.demo.template.pojo.BokeComment;
 import com.example.demo.template.pojo.Book;
 import com.example.demo.template.service.CommentService2;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -86,8 +88,33 @@ class DemoApplicationTests {
     @Test
     void test05(){
 
+        Criteria criteria = Criteria.where("product_name").is("Samsung S3");
+        Query query = new Query();
+        query.addCriteria(criteria);
 
+        Update update = new Update();
+        update.inc("product_available", -1);
 
+        FindAndModifyOptions findAndModifyOptions = new FindAndModifyOptions();
+        // 是否返回新的数据
+        findAndModifyOptions.returnNew(true);
+
+        Book book = mongoTemplate.findAndModify(query, update, findAndModifyOptions, Book.class);
+        System.out.println(book);
+
+    }
+
+    @Test
+    public void test06(){
+        // 对内嵌文档使用条件查询
+        Criteria criteria = new Criteria();
+        Criteria criteria1 = Criteria.where("author").is("joe").and("score").gt(5);
+        criteria.and("comments").elemMatch(criteria1);
+        Query query = new Query();
+        query.addCriteria(criteria);
+
+        List<BokeComment> bokeComments = mongoTemplate.find(query, BokeComment.class);
+        System.out.println(bokeComments);
     }
 
 
