@@ -5,12 +5,14 @@ import com.example.demo.springdata.service.CommentService;
 import com.example.demo.template.pojo.BokeComment;
 import com.example.demo.template.pojo.Book;
 import com.example.demo.template.service.CommentService2;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
@@ -115,6 +117,71 @@ class DemoApplicationTests {
 
         List<BokeComment> bokeComments = mongoTemplate.find(query, BokeComment.class);
         System.out.println(bokeComments);
+    }
+
+    @Test
+    public void test07(){
+
+        // 管道查询 等同于  db.comment.aggregate({$project:{articleid:{$concat:['articleid',"哈哈"]}}})
+        Aggregation aggregation = Aggregation.newAggregation(Aggregation.project("articleid").and("articleid").concat("哈哈"));
+
+        AggregationResults<Comment> comment = mongoTemplate.aggregate(aggregation, "comment", Comment.class);
+
+        for (Comment com:comment
+             ) {
+            System.out.println(com);
+        }
+    }
+
+    @Test
+    public void test08(){
+        // 等同于db.comment.aggregate({$project:{articleid:1}},{$group:{_id:"$articleid",likenum:{$sum:1}}},{$sort:{count:-1}},{$limit:2})
+        Aggregation aggregation = Aggregation.newAggregation(
+                    Aggregation.project("articleid"),
+                    Aggregation.group("articleid").count().as("likenum"),
+                    Aggregation.sort(Sort.Direction.DESC, "likenum"),
+                    Aggregation.limit(2)
+        );
+
+        AggregationResults<Comment> comment = mongoTemplate.aggregate(aggregation, "comment", Comment.class);
+
+        for (Comment com:comment
+        ) {
+            System.out.println(com);
+        }
+
+    }
+
+    @Test
+    public void test09(){
+        // 等同于db.comment.aggregate({$project:{articleid:1,_id:0,likenum:1}},{$group:{_id:"$articleid",likenum:{$max:"$likenum"}}})
+        // 按articleid分组，取，每组likenum最大的文档
+        Aggregation aggregation = Aggregation.newAggregation(
+                Aggregation.project("articleid","likenum"),
+                Aggregation.group("articleid").max("likenum").as("likenum")
+        );
+
+        AggregationResults<Comment> comment = mongoTemplate.aggregate(aggregation, "comment", Comment.class);
+
+        for (Comment com:comment
+        ) {
+            System.out.println(com);
+        }
+
+    }
+
+    @Test
+    public void test10(){
+
+        Query query = new Query();
+
+        // 等同于db.comment.distinct("articleid")
+        List<String> commentList = mongoTemplate.findDistinct(query, "articleid", "comment", String.class);
+
+        for (String comment: commentList
+             ) {
+            System.out.println(comment);
+        }
     }
 
 
