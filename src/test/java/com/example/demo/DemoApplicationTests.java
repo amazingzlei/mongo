@@ -184,5 +184,13 @@ class DemoApplicationTests {
         }
     }
 
-
+    @Test
+    /**
+     * 连接mongo副本集
+     */
+    public void test11(){
+        Query query = new Query();
+        List<Book> books = mongoTemplate.find(query, Book.class);
+        System.out.println(books);
+    }
 }
