@@ -1,0 +1,18 @@
+1.中间操作符
+    1）filter 通过设置的条件过滤元素
+    2）distinct 去重，根据equals和hasCode方法判重
+    3）limit 返回不超过定长的流
+    4）skip 返回一个扔掉前n个元素的流
+    5）map
+    6）floatmap
+    7）sort 排序
+2.终止操作符
+    1）anyMatch
+    2）allMatch
+    3）noneMatch
+    4）findAny
+    5）findFirst
+    6）forEach
+    7）collect
+    8）reduce
+    9）count
