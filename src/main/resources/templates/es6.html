@@ -5,95 +5,108 @@
     <title>Title</title>
 </head>
 <body>
-    <p id="test"></p>
+    <p id="test" title="<div>aaaa</div>">aaaa</p>
 </body>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.5.0.min.js"></script>
 <script>
-    // 数组的解构赋值
-    var [a,b,c] = [1,2,3];
-    console.log(a)
+    // // 数组的解构赋值
+    // var [a,b,c] = [1,2,3];
+    // console.log(a)
+    //
+    // // 对象的解构赋值
+    // var obj = {name:'张三', age:20, address:['扬州', '南京']};
+    // var {name, age, address:number} = obj;
+    // console.log(number)
+    //
+    // // 字符串的解构赋值
+    // var [a,b,c,d,e] = "hello";
+    // console.log(a)
+    // var {length:len} = "hello";
+    // console.log(len)
+    //
+    // /**
+    //  * 字符串拓展
+    //  * @type {string}
+    //  */
+    // // 返回指定位置的字符
+    // var str = "hello";
+    // console.log(str.charAt(1));
+    //
+    // // includes是否包含 可以有第二个参数，表示从哪一个位置开始搜索
+    // console.log(str.includes("a"));
+    // console.log(str.includes("e"));
+    // console.log(str.includes("e", 1));
+    // // startwith 可以有第二个参数，表示从哪一个位置开始搜索
+    // console.log(str.startsWith("he"))
+    //
+    // // endwith 可以有第二个参数，表示从哪一个位置开始搜索
+    // console.log(str.endsWith("llo", 4))
+    //
+    // // 复制操作 参数表示复制几次，可以是小数，但是会被取整 负数会报错
+    // console.log(str.repeat(2.1))
+    //
+    // // ES7推出了字符串补全长度的功能。如果某个字符串不够指定长度，会在头部或尾部补全。padStart用于头部补全，padEnd用于尾部补全。
+    //
+    // 'x'.padStart(5, 'ab') // 'ababx'
+    // 'x'.padStart(4, 'ab') // 'abax'
+    //
+    // 'x'.padEnd(5, 'ab') // 'xabab'
+    // 'x'.padEnd(4, 'ab') // 'xaba'
+    //
+    // // 如果用来补全的字符串与原字符串，两者的长度之和超过了指定的最小长度，则会截去超出位数的补全字符串。
+    //
+    // 'abc'.padStart(10, '0123456789')
+    // // '0123456abc'
+    // // 如果省略第二个参数，则会用空格补全长度。
+    //
+    // 'x'.padStart(4) // '   x'
+    // 'x'.padEnd(4) // 'x   '
+    //
+    // // 模板字符串模板字符串（template string）是增强版的字符串，用反引号（`）标识。
+    // // 它可以当作普通字符串使用，也可以用来定义多行字符串，或者在字符串中嵌入变量。
+    // // 上面代码中的模板字符串，都是用反引号表示。如果在模板字符串中需要使用反引号，则前面要用反斜杠转义。var greeting = `\`Yo\` World!`;
+    // // 模板字符串中所有的空格和缩进都会被保留在输出之中，如果想去除可以调用trim()方法
+    // function authorize(user, action) {
+    //     return `User ${user.name} is not authorized to do ${action}.`;
+    // }
+    // console.log(authorize('张三', 'aaa'));
+    // $("#test").html(`<div id='${str}'>address:${name}</div>`)
+    //
+    //
+    // /**
+    //  * 数组拓展
+    //  */
+    // var test = Array.from("hello");
+    // console.log(test)
+    //
+    // // Array.of方法用于将一组值，转换为数组。
+    //
+    // Array.of(3, 11, 8) // [3,11,8]
+    //
+    // // fill方法使用给定值，填充一个数组。
+    //
+    // ['a', 'b', 'c'].fill(7)
+    // // [7, 7, 7]
+    //
+    // new Array(3).fill(7)
+    // // [7, 7, 7]
+    // // 上面代码表明，fill方法用于空数组的初始化非常方便。数组中已有的元素，会被全部抹去。
+    //
+    // // fill方法还可以接受第二个和第三个参数，用于指定填充的起始位置和结束位置。
+    // ['a', 'b', 'c'].fill(7, 1, 2)
+    // // ['a', 7, 'c']
 
-    // 对象的解构赋值
-    var obj = {name:'张三', age:20, address:['扬州', '南京']};
-    var {name, age, address:number} = obj;
-    console.log(number)
 
-    // 字符串的解构赋值
-    var [a,b,c,d,e] = "hello";
-    console.log(a)
-    var {length:len} = "hello";
-    console.log(len)
-
-    /**
-     * 字符串拓展
-     * @type {string}
-     */
-    // 返回指定位置的字符
-    var str = "hello";
-    console.log(str.charAt(1));
-
-    // includes是否包含 可以有第二个参数，表示从哪一个位置开始搜索
-    console.log(str.includes("a"));
-    console.log(str.includes("e"));
-    console.log(str.includes("e", 1));
-    // startwith 可以有第二个参数，表示从哪一个位置开始搜索
-    console.log(str.startsWith("he"))
-
-    // endwith 可以有第二个参数，表示从哪一个位置开始搜索
-    console.log(str.endsWith("llo", 4))
-
-    // 复制操作 参数表示复制几次，可以是小数，但是会被取整 负数会报错
-    console.log(str.repeat(2.1))
-
-    // ES7推出了字符串补全长度的功能。如果某个字符串不够指定长度，会在头部或尾部补全。padStart用于头部补全，padEnd用于尾部补全。
-
-    'x'.padStart(5, 'ab') // 'ababx'
-    'x'.padStart(4, 'ab') // 'abax'
-
-    'x'.padEnd(5, 'ab') // 'xabab'
-    'x'.padEnd(4, 'ab') // 'xaba'
-
-    // 如果用来补全的字符串与原字符串，两者的长度之和超过了指定的最小长度，则会截去超出位数的补全字符串。
-
-    'abc'.padStart(10, '0123456789')
-    // '0123456abc'
-    // 如果省略第二个参数，则会用空格补全长度。
-
-    'x'.padStart(4) // '   x'
-    'x'.padEnd(4) // 'x   '
-
-    // 模板字符串模板字符串（template string）是增强版的字符串，用反引号（`）标识。
-    // 它可以当作普通字符串使用，也可以用来定义多行字符串，或者在字符串中嵌入变量。
-    // 上面代码中的模板字符串，都是用反引号表示。如果在模板字符串中需要使用反引号，则前面要用反斜杠转义。var greeting = `\`Yo\` World!`;
-    // 模板字符串中所有的空格和缩进都会被保留在输出之中，如果想去除可以调用trim()方法
-    function authorize(user, action) {
-        return `User ${user.name} is not authorized to do ${action}.`;
+    // for(var i=0;i<3;++i){
+    //     setTimeout(function(){
+    //         console.log(i);
+    //     },100);
+    // }
+    var m= 1, j = k = 0;
+    function add(n) {
+        return n = n+1;
     }
-    console.log(authorize('张三', 'aaa'));
-    $("#test").html(`<div id='${str}'>address:${name}</div>`)
-
-
-    /**
-     * 数组拓展
-     */
-    var test = Array.from("hello");
-    console.log(test)
-
-    // Array.of方法用于将一组值，转换为数组。
-
-    Array.of(3, 11, 8) // [3,11,8]
-
-    // fill方法使用给定值，填充一个数组。
-
-    ['a', 'b', 'c'].fill(7)
-    // [7, 7, 7]
-
-    new Array(3).fill(7)
-    // [7, 7, 7]
-    // 上面代码表明，fill方法用于空数组的初始化非常方便。数组中已有的元素，会被全部抹去。
-
-    // fill方法还可以接受第二个和第三个参数，用于指定填充的起始位置和结束位置。
-    ['a', 'b', 'c'].fill(7, 1, 2)
-    // ['a', 7, 'c']
+    y = add(m);
+    console.log(y)
 </script>
 </html>

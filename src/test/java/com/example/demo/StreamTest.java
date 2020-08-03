@@ -13,7 +13,7 @@ public class StreamTest {
     @Test
     public void test01() {
         List<String> stringList = Arrays.asList("java", "javascript", "css");
-        List<String> collect = stringList.stream().limit(2).collect(Collectors.toList());
+        List<String> collect = stringList.stream().skip(0).limit(2).collect(Collectors.toList());
         System.out.println(collect);
 
         Comment comment = new Comment();
@@ -26,7 +26,9 @@ public class StreamTest {
     @Test
     public void test02() {
         List<String> stringList = Arrays.asList("java", "javascript", "css");
-        List<String> strings = stringList.stream().filter((item) -> item.contains("a")).collect(Collectors.toList());
+        List<String> strings = stringList.stream().filter((item) -> item.contains("css")
+
+        ).collect(Collectors.toList());
         System.out.println(strings);
     }
 
@@ -53,8 +55,15 @@ public class StreamTest {
     @Test
     public void test05() {
         List<Integer> tList = Arrays.asList(5, 2, 56, 78, 24, 98, 63);
+        List<Integer> integers = new ArrayList<>();
 
         tList.stream().sorted(Comparator.reverseOrder()).forEach(System.out::println);
+        tList.stream().forEach((item)->{
+            if(item > 50){
+                integers.add(item);
+            }
+        });
+        System.out.println(integers);
     }
 
     @Test
@@ -124,5 +133,44 @@ public class StreamTest {
         // toMap的第三个参数表示如果键冲突时,后者覆盖前者
         Optional<String> any = stringList.parallelStream().findFirst();
         System.out.println(any.get());
+
+        List<Comment> comments = new ArrayList<>();
+
+
+        Comment comment = new Comment();
+        comment.setNickname("1");
+        comment.setLikenum(2L);
+
+        Comment comment2 = new Comment();
+        comment2.setNickname("2");
+        comment2.setLikenum(3L);
+
+        comments.add(comment);
+        comments.add(comment2);
+
+        List<Comment> studentsSortName = comments.stream().sorted(Comparator.comparing(Comment::getLikenum).reversed()).collect(Collectors.toList());
+        System.out.println(studentsSortName);
+    }
+
+    @Test
+    public void test15(){
+        Comment comment1 = new Comment();
+        comment1.setLikenum(5L);
+        Comment comment2 = new Comment();
+        comment2.setLikenum(5L);
+        Comment comment3 = new Comment();
+        comment3.setLikenum(5L);
+        Comment comment4 = new Comment();
+        comment4.setLikenum(5L);
+        Comment comment5 = new Comment();
+        comment5.setLikenum(5L);
+        List<Comment> comments = new ArrayList<>();
+        comments.add(comment1);
+        comments.add(comment2);
+        comments.add(comment3);
+        comments.add(comment4);
+        comments.add(comment5);
+        long sum = comments.stream().mapToLong((item) -> item.getLikenum()).sum();
+        System.out.println(sum);
     }
 }
